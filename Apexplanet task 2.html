@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML, CSS and JavaScript | Interactive Web Design</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #6a11cb;
+            --secondary: #2575fc;
+            --accent: #ff5e62;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #2ecc71;
+            --warning: #f39c12;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: var(--light);
+            min-height: 100vh;
+            overflow-x: hidden;
+            padding: 20px;
+            position: relative;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Header Styles */
+        header {
+            text-align: center;
+            padding: 40px 0;
+            animation: fadeIn 1.5s ease-out;
+        }
+        
+        h1 {
+            font-size: 4rem;
+            margin-bottom: 15px;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+            background: linear-gradient(to right, #ff8a00, var(--accent), #22c1c3);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: gradientShift 8s infinite alternate;
+            letter-spacing: 2px;
+        }
+        
+        .title-container {
+            position: relative;
+            margin-bottom: 30px;
+            padding: 20px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            max-width: 700px;
+            margin: 0 auto 40px;
+        }
+        
+        .title-container h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: #ffd166;
+        }
+        
+        .title-container p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+        
+        /* Navigation */
+        nav {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 15px;
+            margin: 20px 0 40px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .nav-btn {
+            padding: 12px 25px;
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            border-radius: 50px;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .nav-btn:hover, .nav-btn.active {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+        }
+        
+        /* Main Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin: 30px 0;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .card:nth-child(2) {
+            animation-delay: 1s;
+        }
+        
+        .card:nth-child(3) {
+            animation-delay: 2s;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+        
+        .card h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #ffd166;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        /* Contact Form */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 10px;
+            border: none;
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
+        }
+        
+        .btn {
+            padding: 12px 30px;
+            font-size: 1rem;
+            border-radius: 50px;
+            border: none;
+            background: linear-gradient(45deg, var(--accent), #ff9966);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .btn-block {
+            width: 100%;
+            justify-content: center;
+        }
+        
+        /* To-Do List */
+        .todo-container {
+            margin-top: 20px;
+        }
+        
+        .todo-input {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .todo-input input {
+            flex: 1;
+        }
+        
+        .todo-list {
+            list-style: none;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .todo-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .todo-item.completed {
+            opacity: 0.7;
+            text-decoration: line-through;
+        }
+        
+        .todo-item .actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .todo-item button {
+            background: transparent;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 1rem;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .todo-item button:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .todo-item .complete-btn {
+            color: var(--success);
+        }
+        
+        .todo-item .delete-btn {
+            color: var(--accent);
+        }
+        
+        /* Image Gallery */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .gallery-item {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            aspect-ratio: 1/1;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-item .remove-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(255, 94, 98, 0.8);
+            color: white;
+            border: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .gallery-item:hover .remove-btn {
+            opacity: 1;
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 50px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .social-icons a:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .social-icons a.linkedin:hover {
+            background: #0a66c2;
+        }
+        
+        .developer-credit {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            padding: 15px 30px;
+            display: inline-block;
+            margin-top: 20px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        
+        /* Animations */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            100% {
+                background-position: 100% 50%;
+            }
+        }
+        
+        /* Particle background effect */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            overflow: hidden;
+        }
+        
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            animation: floatParticle linear infinite;
+        }
+        
+        @keyframes floatParticle {
+            to {
+                transform: translateY(-100px) rotate(360deg);
+            }
+        }
+        
+        /* Developer Signature */
+        .signature {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px 20px;
+            border-radius: 30px;
+            backdrop-filter: blur(5px);
+            animation: pulse 2s infinite;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        
+        .signature i {
+            color: #0a66c2;
+            font-size: 1.5rem;
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(229, 46, 113, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(229, 46, 113, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(229, 46, 113, 0);
+            }
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .title-container h2 {
+                font-size: 2rem;
+            }
+            
+            .title-container p {
+                font-size: 1rem;
+            }
+            
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .todo-input {
+                flex-direction: column;
+            }
+            
+            .nav-btn {
+                flex: 1;
+                min-width: 140px;
+            }
+            
+            .signature {
+                font-size: 0.9rem;
+                bottom: 10px;
+                right: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+    
+    <div class="signature">
+        <i class="fab fa-linkedin"></i>
+        B. Lekhya Sri Reddy
+    </div>
+    
+    <div class="container">
+        <header>
+            <h1>HTML, CSS and JavaScript</h1>
+            
+            <div class="title-container">
+                <h2>Interactive Web Experience</h2>
+                <p>A comprehensive journey through modern web development technologies. Master HTML structure, CSS styling, and JavaScript interactivity in this immersive experience.</p>
+            </div>
+        </header>
+        
+        <nav>
+            <button class="nav-btn active" data-target="contact">
+                <i class="fas fa-envelope"></i> Contact Form
+            </button>
+            <button class="nav-btn" data-target="todo">
+                <i class="fas fa-tasks"></i> To-Do List
+            </button>
+            <button class="nav-btn" data-target="gallery">
+                <i class="fas fa-images"></i> Image Gallery
+            </button>
+        </nav>
+        
+        <div class="content-grid">
+            <!-- Contact Form Card -->
+            <div class="card" id="contact">
+                <h2><i class="fas fa-envelope"></i> Contact Us</h2>
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" class="form-control" placeholder="Enter your name">
+                        <div class="error" id="nameError"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" class="form-control" placeholder="Enter your email">
+                        <div class="error" id="emailError"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" class="form-control" rows="4" placeholder="Your message here..."></textarea>
+                        <div class="error" id="messageError"></div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-block">
+                        <i class="fas fa-paper-plane"></i> Send Message
+                    </button>
+                </form>
+            </div>
+            
+            <!-- To-Do List Card -->
+            <div class="card" id="todo">
+                <h2><i class="fas fa-tasks"></i> To-Do List</h2>
+                <div class="todo-container">
+                    <div class="todo-input">
+                        <input type="text" id="taskInput" class="form-control" placeholder="Add a new task...">
+                        <button id="addTask" class="btn">
+                            <i class="fas fa-plus"></i> Add
+                        </button>
+                    </div>
+                    
+                    <ul class="todo-list" id="taskList">
+                        <li class="todo-item">
+                            <span>Learn HTML Basics</span>
+                            <div class="actions">
+                                <button class="complete-btn"><i class="fas fa-check"></i></button>
+                                <button class="delete-btn"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </li>
+                        <li class="todo-item">
+                            <span>Style with CSS</span>
+                            <div class="actions">
+                                <button class="complete-btn"><i class="fas fa-check"></i></button>
+                                <button class="delete-btn"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </li>
+                        <li class="todo-item completed">
+                            <span>Add JavaScript Interactivity</span>
+                            <div class="actions">
+                                <button class="complete-btn"><i class="fas fa-check"></i></button>
+                                <button class="delete-btn"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Image Gallery Card -->
+            <div class="card" id="gallery">
+                <h2><i class="fas fa-images"></i> Image Gallery</h2>
+                <div class="gallery" id="imageGallery">
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Design 1">
+                        <button class="remove-btn"><i class="fas fa-times"></i></button>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Design 2">
+                        <button class="remove-btn"><i class="fas fa-times"></i></button>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1618005198919-d3d4b5a92ead?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Design 3">
+                        <button class="remove-btn"><i class="fas fa-times"></i></button>
+                    </div>
+                </div>
+                <div style="margin-top: 20px;">
+                    <button id="addImage" class="btn">
+                        <i class="fas fa-plus"></i> Add Random Image
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/b-lekhya-sri-reddy-8453a836a?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" 
+                   class="linkedin" target="_blank">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+            </div>
+            
+            <div class="developer-credit">
+                <p>2025 Interactive Web Design. Developed by B. Lekhya Sri Reddy</p>
+            </div>
+        </footer>
+    </div>
+    
+    <script>
+        // Create floating particles for background
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random properties for each particle
+                const size = Math.random() * 10 + 5;
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                const animationDuration = Math.random() * 20 + 10;
+                const animationDelay = Math.random() * 5;
+                const opacity = Math.random() * 0.5 + 0.1;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${posX}%`;
+                particle.style.top = `${posY}%`;
+                particle.style.animationDuration = `${animationDuration}s`;
+                particle.style.animationDelay = `${animationDelay}s`;
+                particle.style.opacity = opacity;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        // Navigation functionality
+        const navButtons = document.querySelectorAll('.nav-btn');
+        const cards = document.querySelectorAll('.card');
+        
+        navButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const target = button.getAttribute('data-target');
+                
+                // Update active button
+                navButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                
+                // Show target card
+                cards.forEach(card => {
+                    if (card.id === target) {
+                        card.style.display = 'block';
+                        card.style.animation = 'fadeIn 0.5s ease-out';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+        
+        // Contact form validation
+        const contactForm = document.getElementById('contactForm');
+        
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const message = document.getElementById('message').value.trim();
+            
+            let isValid = true;
+            
+            // Reset errors
+            document.getElementById('nameError').textContent = '';
+            document.getElementById('emailError').textContent = '';
+            document.getElementById('messageError').textContent = '';
+            
+            // Name validation
+            if (name === '') {
+                document.getElementById('nameError').textContent = 'Name is required';
+                isValid = false;
+            }
+            
+            // Email validation
+            if (email === '') {
+                document.getElementById('emailError').textContent = 'Email is required';
+                isValid = false;
+            } else if (!isValidEmail(email)) {
+                document.getElementById('emailError').textContent = 'Please enter a valid email';
+                isValid = false;
+            }
+            
+            // Message validation
+            if (message === '') {
+                document.getElementById('messageError').textContent = 'Message is required';
+                isValid = false;
+            } else if (message.length < 10) {
+                document.getElementById('messageError').textContent = 'Message must be at least 10 characters';
+                isValid = false;
+            }
+            
+            if (isValid) {
+                // Form is valid - show success message
+                alert('Form submitted successfully!\n\nName: ' + name + '\nEmail: ' + email + '\nMessage: ' + message);
+                contactForm.reset();
+            }
+        });
+        
+        function isValidEmail(email) {
+            const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(email);
+        }
+        
+        // To-Do List functionality
+        const taskInput = document.getElementById('taskInput');
+        const addTaskBtn = document.getElementById('addTask');
+        const taskList = document.getElementById('taskList');
+        
+        // Add event listeners to existing to-do items
+        document.querySelectorAll('.todo-item').forEach(item => {
+            const completeBtn = item.querySelector('.complete-btn');
+            const deleteBtn = item.querySelector('.delete-btn');
+            
+            completeBtn.addEventListener('click', function() {
+                item.classList.toggle('completed');
+            });
+            
+            deleteBtn.addEventListener('click', function() {
+                item.style.animation = 'fadeOut 0.3s ease-out';
+                setTimeout(() => {
+                    item.remove();
+                }, 300);
+            });
+        });
+        
+        addTaskBtn.addEventListener('click', addTask);
+        taskInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                addTask();
+            }
+        });
+        
+        function addTask() {
+            const taskText = taskInput.value.trim();
+            
+            if (taskText === '') {
+                alert('Please enter a task');
+                return;
+            }
+            
+            const taskItem = document.createElement('li');
+            taskItem.className = 'todo-item';
+            taskItem.innerHTML = `
+                <span>${taskText}</span>
+                <div class="actions">
+                    <button class="complete-btn"><i class="fas fa-check"></i></button>
+                    <button class="delete-btn"><i class="fas fa-trash"></i></button>
+                </div>
+            `;
+            
+            taskList.appendChild(taskItem);
+            taskInput.value = '';
+            
+            // Add event listeners for task actions
+            const completeBtn = taskItem.querySelector('.complete-btn');
+            const deleteBtn = taskItem.querySelector('.delete-btn');
+            
+            completeBtn.addEventListener('click', function() {
+                taskItem.classList.toggle('completed');
+            });
+            
+            deleteBtn.addEventListener('click', function() {
+                taskItem.style.animation = 'fadeOut 0.3s ease-out';
+                setTimeout(() => {
+                    taskItem.remove();
+                }, 300);
+            });
+        }
+        
+        // Image Gallery functionality
+        const imageGallery = document.getElementById('imageGallery');
+        const addImageBtn = document.getElementById('addImage');
+        
+        // Add event listeners to existing remove buttons
+        document.querySelectorAll('.gallery-item .remove-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const galleryItem = this.parentElement;
+                galleryItem.style.transform = 'scale(0)';
+                galleryItem.style.opacity = '0';
+                setTimeout(() => {
+                    galleryItem.remove();
+                }, 300);
+            });
+        });
+        
+        // Sample images for the gallery
+        const sampleImages = [
+            'https://images.unsplash.com/photo-1508830524289-0adcbe822b40?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1618005198919-d3d4b5a92ead?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'
+        ];
+        
+        addImageBtn.addEventListener('click', function() {
+            // Add a random image from the sample list
+            const randomIndex = Math.floor(Math.random() * sampleImages.length);
+            addImageToGallery(sampleImages[randomIndex]);
+        });
+        
+        function addImageToGallery(imgUrl) {
+            const galleryItem = document.createElement('div');
+            galleryItem.className = 'gallery-item';
+            galleryItem.innerHTML = `
+                <img src="${imgUrl}" alt="Gallery Image">
+                <button class="remove-btn"><i class="fas fa-times"></i></button>
+            `;
+            
+            imageGallery.appendChild(galleryItem);
+            
+            // Add event listener for remove button
+            const removeBtn = galleryItem.querySelector('.remove-btn');
+            removeBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                galleryItem.style.transform = 'scale(0)';
+                galleryItem.style.opacity = '0';
+                setTimeout(() => {
+                    galleryItem.remove();
+                }, 300);
+            });
+        }
+        
+        // Add fadeOut animation to CSS
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeOut {
+                from {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+                to {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Initialize particles on page load
+        window.addEventListener('load', createParticles);
+    </script>
+</body>
+</html>
