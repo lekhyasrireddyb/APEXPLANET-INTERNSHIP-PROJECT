@@ -1,2 +1,9 @@
-# APEXPLANET-INTERNSHIP-PROJECT
-ALL 5 TASKS COMPLETED DURING APEXPLANET INTERNSHIP
+APEXPLANET-INTERNSHIP-PROJECT
+This repository contains the 5 tasks completed as part of my Data Analyst Internship at ApexPlanet.
+Each task demonstrates hands-on experience with data cleaning, analysis, visualization, and dashboard building.
+🎯 Skills Applied :-
+Excel Data Analysis✨
+Power BI Dashboard Creation🔥
+Data Cleaning & Transformation📝
+Visual Storytelling💥
+Report Automation📈
